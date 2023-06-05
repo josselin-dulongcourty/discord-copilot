@@ -1,0 +1,29 @@
+{
+  "name": "discord-copilot",
+  "version": "0.0.1",
+  "description": "A (risky) discord development bot",
+  "main": "main.js",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josselin-dulongcourty/discord-copilot.git"
+  },
+  "keywords": [
+    "discord"
+  ],
+  "author": "https://github.com/josselin-dulongcourty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josselin-dulongcourty/discord-copilot/issues"
+  },
+  "homepage": "https://github.com/josselin-dulongcourty/discord-copilot#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.1.4"
+  }
+}
