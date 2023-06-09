@@ -14,8 +14,6 @@ class CopilotClient extends Client {
         this._loadCommands();
         this.events = new Collection();
         this._loadEvents();
-
-        this._console = null;
     }
 
     get basePath() {
@@ -40,9 +38,10 @@ class CopilotClient extends Client {
         for (const file of commandFiles) {
             const filePath = path.join(commandsPath, file);
             const command = require(filePath);
-            // Set a new item in the Collection with the key as the command name and the value as the exported module
+
             if ('data' in command && 'name' in command.data && 'run' in command) {
                 this.commands.set(command.data.name, command);
+                console.log(`Loaded command ${command.data.name}`);
             }
         }
     }
@@ -62,9 +61,10 @@ class CopilotClient extends Client {
             const filePath = path.join(eventsPath, file);
             const eventFile = require(filePath);
             const event = eventFile.event;
-            // Set a new item in the Collection with the key as the command name and the value as the exported module
+
             if (!!event && !!event.name && !!event.type && !!event.run) {
                 this.events.set(event.name, event);
+                console.log(`Loaded event ${event.name}`);
             }
         }
 
@@ -72,7 +72,8 @@ class CopilotClient extends Client {
     }
 
     _setupEvents() {
-        this.events.forEach((event) => {
+        this.events.forEach(async (event) => {
+            if (!!event.setup) await event.setup(this);
             this[event.when].call(this, event.type, event.run);
         });
     }
