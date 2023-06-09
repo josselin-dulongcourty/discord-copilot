@@ -11,7 +11,11 @@ if (process.env.NODE_ENV !== "production") {
 const token = process.env.DISCORD_SECRET;
 
 const client = new CopilotClient({
-    intents: [GatewayIntentBits.Guilds]
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessages
+    ]
 }, {
     token: token,
     commandsPath: "./commands",

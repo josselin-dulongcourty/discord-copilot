@@ -1,16 +1,16 @@
 const { Events } = require("discord.js");
+const { CopilotEventHandler } = require("../classes/CopilotEventHandler");
 
-module.exports = {
+const event = new CopilotEventHandler({
     name: "ClientReady",
     type: Events.ClientReady,
     when: "once",
-
-    /**
-     * 
-     * @param {import("discord.js").Client} client 
-     */
-    run: function(client) {
+    run: async function (client) {
         console.log("Registered.")
         client.registerCommands();
     }
+});
+
+module.exports = {
+    event
 }

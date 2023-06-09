@@ -11,20 +11,29 @@ class CopilotClient extends Client {
         this._basePath = copilot.basePath;
 
         this.commands = new Collection();
-        this.loadCommands();
+        this._loadCommands();
         this.events = new Collection();
-        this.loadEvents();
+        this._loadEvents();
+
+        this._console = null;
     }
 
     get basePath() {
         return this._basePath;
     }
 
+    get console() {
+        return this._console;
+    }
+    set console(channelId) {
+        this._console = channelId;
+    }
+
     login() {
         super.login(this._token);
     }
 
-    loadCommands() {
+    _loadCommands() {
         const commandsPath = path.join(this._basePath, this._commandsPath);
         const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
@@ -45,25 +54,26 @@ class CopilotClient extends Client {
         );
     }
 
-    loadEvents() {
+    _loadEvents() {
         const eventsPath = path.join(this._basePath, this._eventsPath);
         const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
         for (const file of eventFiles) {
             const filePath = path.join(eventsPath, file);
-            const event = require(filePath);
+            const eventFile = require(filePath);
+            const event = eventFile.event;
             // Set a new item in the Collection with the key as the command name and the value as the exported module
-            if ('name' in event && 'type' in event && 'run' in event) {
+            if (!!event && !!event.name && !!event.type && !!event.run) {
                 this.events.set(event.name, event);
             }
         }
 
-        this.setupEvents();
+        this._setupEvents();
     }
 
-    setupEvents() {
+    _setupEvents() {
         this.events.forEach((event) => {
-            this[event.when](event.type, event.run);
+            this[event.when].call(this, event.type, event.run);
         });
     }
 }
