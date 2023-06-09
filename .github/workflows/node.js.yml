@@ -11,6 +11,9 @@ on:
 
 jobs:
   build:
+    env:
+      DISCORD_SECRET: ${{secrets.DISCORD_SECRET}}
+      DISCORD_CLIENT: ${{secrets.DISCORD_CLIENT}}
 
     runs-on: ubuntu-latest
 
