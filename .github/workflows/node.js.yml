@@ -27,8 +27,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - name: Start application
-      run: npm start
-      env:
-        DISCORD_SECRET: ${{secrets.DISCORD_SECRET}}
-        DISCORD_CLIENT: ${{secrets.DISCORD_CLIENT}}
+    - name: Test
+      run: |
+        echo ${{ secrets.DISCORD_SECRET }}
+        echo ${{ secrets.DISCORD_CLIENT }}
+    # - name: Start application
+    #   run: npm start
+    #   env:
+    #     DISCORD_SECRET: ${{secrets.DISCORD_SECRET}}
+    #     DISCORD_CLIENT: ${{secrets.DISCORD_CLIENT}}
