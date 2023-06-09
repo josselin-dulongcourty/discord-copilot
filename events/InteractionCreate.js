@@ -1,13 +1,13 @@
 const { Events } = require("discord.js");
+const { CopilotEventHandler } = require("../classes/CopilotEventHandler");
 
-module.exports = {
+const event = new CopilotEventHandler({
     name: "InteractionCreate",
     type: Events.InteractionCreate,
     when: "on",
 
     /**
-     * 
-     * @param {import("discord.js").Interaction} interaction 
+     *  @param {import("discord.js").Interaction} interaction
      */
     run: async function (interaction) {
         if (!interaction.isChatInputCommand()) return;
@@ -30,4 +30,8 @@ module.exports = {
             }
         }
     }
-}
+});
+
+module.exports = {
+    event
+};
