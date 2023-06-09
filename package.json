@@ -4,7 +4,8 @@
   "description": "A (risky) discord development bot",
   "main": "main.js",
   "scripts": {
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "start": "node ."
   },
   "repository": {
     "type": "git",
