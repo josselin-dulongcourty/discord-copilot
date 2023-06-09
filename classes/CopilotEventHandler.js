@@ -4,6 +4,7 @@ class CopilotEventHandler {
         this._type = options.type;
         this._listening = options.listening || options.when;
         this._runFn = options.run || options.execute;
+        this._setupFn = options.setup || options.init || null;
     }
 
     get name() { return this._name; }
@@ -19,6 +20,7 @@ class CopilotEventHandler {
 
     // Fonction run qui execute this._runFn, les paramètres sont conservés
     get run() { return this._runFn; }
+    get setup() { return this._setupFn; }
 }
 
 module.exports = {
