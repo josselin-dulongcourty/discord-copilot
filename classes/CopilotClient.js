@@ -53,7 +53,7 @@ class CopilotClient extends Client {
     _registerCommands() {
         this.rest.put(
             Routes.applicationCommands(this.application.id),
-            { body: this.commands.map(command => command.data.toJSON()) },
+            { body: this.commands.map(command => command.data) },
         );
     }
 
