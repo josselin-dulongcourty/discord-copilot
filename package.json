@@ -1,6 +1,6 @@
 {
   "name": "discord-copilot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A (risky) discord development bot",
   "main": "main.js",
   "scripts": {

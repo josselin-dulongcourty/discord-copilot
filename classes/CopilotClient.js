@@ -39,18 +39,27 @@ class CopilotClient extends Client {
             const filePath = path.join(commandsPath, file);
             const command = require(filePath);
 
-            if ('data' in command && 'name' in command.data && 'run' in command) {
+            if (!!command && !!command.name && !!command.data && !!command.run) {
                 this.commands.set(command.data.name, command);
                 console.log(`Loaded command ${command.data.name}`);
             }
         }
+
+        this._setupCommands();
+        this.once('ready', this._registerCommands.bind(this));
     }
 
-    registerCommands() {
+    _registerCommands() {
         this.rest.put(
             Routes.applicationCommands(this.application.id),
             { body: this.commands.map(command => command.data.toJSON()) },
         );
+    }
+
+    _setupCommands() {
+        this.commands.forEach(async (command) => {
+            if (!!command.setup) await command.setup(this);
+        });
     }
 
     _loadEvents() {

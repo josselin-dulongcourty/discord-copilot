@@ -7,7 +7,6 @@ const event = new CopilotEventHandler({
     when: "once",
     run: async function (client) {
         console.log("Registered.")
-        client.registerCommands();
     }
 });
 
